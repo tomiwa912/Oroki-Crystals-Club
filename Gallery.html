@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Oroki Crystals Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #001F54;
+            background-color: #f8fdff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            height: 60px;
+        }
+        
+        .nav-desktop {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #001F54;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+        
+        .nav-link.active {
+            color: #D4AF37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #001F54;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #001F54 0%, #00308c 100%);
+            color: white;
+            text-align: center;
+            padding: 140px 0 60px;
+            margin-top: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 40px 0 80px;
+        }
+        
+        /* Masonry Grid */
+        .masonry-grid {
+            columns: 4;
+            column-gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .masonry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .masonry-img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .masonry-item:hover .masonry-img {
+            transform: scale(1.05);
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .lightbox-prev,
+        .lightbox-next {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
+        }
+        
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #001F54;
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-logo img {
+            height: 70px;
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .masonry-grid {
+                columns: 3;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .masonry-grid {
+                columns: 2;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .masonry-grid {
+                columns: 1;
+            }
+            
+            .hero {
+                padding: 120px 0 40px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Animation Styles */
+        .masonry-item {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Stagger animations for items */
+        .masonry-item:nth-child(1) { animation-delay: 0.1s; }
+        .masonry-item:nth-child(2) { animation-delay: 0.15s; }
+        .masonry-item:nth-child(3) { animation-delay: 0.2s; }
+        .masonry-item:nth-child(4) { animation-delay: 0.25s; }
+        .masonry-item:nth-child(5) { animation-delay: 0.3s; }
+        .masonry-item:nth-child(6) { animation-delay: 0.35s; }
+        .masonry-item:nth-child(7) { animation-delay: 0.4s; }
+        .masonry-item:nth-child(8) { animation-delay: 0.45s; }
+        .masonry-item:nth-child(9) { animation-delay: 0.5s; }
+        .masonry-item:nth-child(10) { animation-delay: 0.55s; }
+        .masonry-item:nth-child(11) { animation-delay: 0.6s; }
+        .masonry-item:nth-child(12) { animation-delay: 0.65s; }
+        .masonry-item:nth-child(13) { animation-delay: 0.7s; }
+        .masonry-item:nth-child(14) { animation-delay: 0.75s; }
+        .masonry-item:nth-child(15) { animation-delay: 0.8s; }
+        .masonry-item:nth-child(16) { animation-delay: 0.85s; }
+        .masonry-item:nth-child(17) { animation-delay: 0.9s; }
+        .masonry-item:nth-child(18) { animation-delay: 0.95s; }
+        .masonry-item:nth-child(19) { animation-delay: 1s; }
+        .masonry-item:nth-child(20) { animation-delay: 1.05s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club" class="logo">
+            
+            <nav class="nav-desktop">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="Members.html" class="nav-link">Members</a>
+                <a href="Gallery.html" class="nav-link active">Gallery</a>
+                <a href="Latestnews.html" class="nav-link">Latest News</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Photo Gallery</h1>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Masonry Grid -->
+            <div class="masonry-grid" id="masonryGrid">
+                <!-- Gallery items will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="" class="lightbox-img" id="lightboxImg">
+        </div>
+        <div class="lightbox-nav">
+            <button class="lightbox-prev" id="lightboxPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-next" id="lightboxNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club">
+            </div>
+            <div class="copyright">
+                <p>© 2025 Oroki Crystals Club. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        // Gallery data - 28 placeholder images with varying aspect ratios for visual interest
+        const galleryItems = [
+            { 
+                id: 1, 
+                image: "https://i.postimg.cc/CKbqLJR7/495659240-122170157024526132-8210235294691733854-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 2, 
+                image: "https://i.postimg.cc/kgs5jZRk/468309367-122125653068526132-8322942089640965352-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 3, 
+                image: "https://i.postimg.cc/264MGpVW/476100238-122145067796526132-2660197616239189433-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 4, 
+                image: "https://i.postimg.cc/kgX0MJn4/458615623-122093972024526132-1754001732688290205-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 5, 
+                image: "https://i.postimg.cc/WzzZbqf8/534378777-122182464440526132-7713636755422748857-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 6, 
+                image: "https://i.postimg.cc/Xq9rvKkw/Group-Picture-2.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 7, 
+                image: "https://i.postimg.cc/Gph8Lsff/469945288-122130875354526132-3703277840080816409-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 8, 
+                image: "https://i.postimg.cc/0NVLFrhx/475944238-122145067838526132-8583844391244129072-n.jpg",
+                aspect: "Horizontal"
+            },
+            { 
+                id: 9, 
+                image: "https://i.postimg.cc/3N3n1sHk/475981135-122145067754526132-1915136275054924557-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 10, 
+                image: "https://i.postimg.cc/HsxtL4W1/470162352-122131714370526132-5862114376238176264-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 11, 
+                image: "https://i.postimg.cc/sDQZ8nDx/470761720-122133339890526132-3110322704001346476-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 12, 
+                image: "https://i.postimg.cc/HsxtL4W1/470162352-122131714370526132-5862114376238176264-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 13, 
+                image: "https://i.postimg.cc/L628kNYG/534378777-122182464440526132-7713636755422748857-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 14, 
+                image: "https://i.postimg.cc/CxdYJtFr/471198573-122133339644526132-7250691362297706431-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 15, 
+                image: "https://i.postimg.cc/x8tD3GBS/470208685-122131600214526132-2293466002389060505-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 16, 
+                image: "https://i.postimg.cc/MTSCkrSS/476442115-122145067880526132-1215088085886836432-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 17, 
+                image: "https://i.postimg.cc/zDnnX2YQ/19474129-img20250816wa0013-jpeg14e7c0e930d58d489212fbc81feccc99.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 18, 
+                image: "https://i.postimg.cc/x80qdRKr/505161580-122172267566526132-5223993333304610995-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 19, 
+                image: "https://i.postimg.cc/Hn4Zwpcc/469861221-122130703478526132-4303228069868841844-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 20, 
+                image: "https://i.postimg.cc/hGBngGL6/534427460-122182464350526132-1431757104623776257-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 21, 
+                image: "https://i.postimg.cc/hGBngGL6/534427460-122182464350526132-1431757104623776257-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 22, 
+                image: "https://i.postimg.cc/bN9WbRkC/18578821-img20240718wa0055-jpeg1d96786da8c97258253f524542323c2e.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 23, 
+                image: "https://i.postimg.cc/Hn4Zwpcc/469861221-122130703478526132-4303228069868841844-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 24, 
+                image: "https://i.postimg.cc/v8q6mJS3/Their-Group-pictures-1.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 25, 
+                image: "https://i.postimg.cc/V65DV3Gv/472072050-122135227316526132-6999322468428772320-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 26, 
+                image: "https://i.postimg.cc/gJRNpvpb/472209463-122135371208526132-2155917110223861326-n.jpg",
+                aspect: "horizontal"
+            },
+            { 
+                id: 27, 
+                image: "https://i.postimg.cc/3xstcSMF/471287967-122133338228526132-1752530725875868051-n.jpg",
+                aspect: "vertical"
+            },
+            { 
+                id: 28, 
+                image: "https://i.postimg.cc/BQypjYvf/469937916-122130697058526132-4682315188867588718-n.jpg",
+                aspect: "horizontal"
+            }
+        ];
+
+        // Generate gallery items
+        const masonryGrid = document.getElementById('masonryGrid');
+        
+        galleryItems.forEach(item => {
+            const masonryItem = document.createElement('div');
+            masonryItem.className = 'masonry-item';
+            masonryItem.innerHTML = `
+                <img src="${item.image}" alt="Oroki Crystals Club Event" class="masonry-img">
+            `;
+            masonryGrid.appendChild(masonryItem);
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        
+        let currentIndex = 0;
+        
+        // Open lightbox
+        document.querySelectorAll('.masonry-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateLightbox();
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close lightbox
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Navigate lightbox
+        lightboxPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            updateLightbox();
+        });
+        
+        lightboxNext.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % galleryItems.length;
+            updateLightbox();
+        });
+        
+        // Update lightbox content
+        function updateLightbox() {
+            const item = galleryItems[currentIndex];
+            lightboxImg.src = item.image;
+        }
+        
+        // Close lightbox when clicking outside
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('open')) {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                } else if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+                    updateLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % galleryItems.length;
+                    updateLightbox();
+                }
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navDesktop = document.querySelector('.nav-desktop');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navDesktop.style.display = navDesktop.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Simplified GSAP Animations
+        window.addEventListener('DOMContentLoaded', function() {
+            // Simple fade-in for hero title
+            gsap.from('.hero h1', {
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out'
+            });
+
+            // Simple fade-in for gallery section
+            gsap.from('.gallery-section', {
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out'
+            });
+
+            // Simple fade-in for gallery items
+            gsap.from('.masonry-item', {
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+</html>

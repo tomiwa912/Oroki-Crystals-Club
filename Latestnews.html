@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News - Oroki Crystals Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #001F54;
+            background-color: #E0F7FA;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            height: 60px;
+        }
+        
+        .nav-desktop {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #001F54;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+        
+        .nav-link.active {
+            color: #D4AF37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #001F54;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #001F54 0%, #00308c 100%);
+            color: white;
+            text-align: center;
+            padding: 140px 0 80px;
+            margin-top: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* News Section */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #001F54;
+            margin-bottom: 15px;
+        }
+        
+        .title-divider {
+            width: 80px;
+            height: 4px;
+            background-color: #D4AF37;
+            margin: 0 auto;
+        }
+        
+        /* News Cards */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            max-height: 500px; /* Initial collapsed height */
+            transition: max-height 0.5s ease, transform 0.3s ease;
+        }
+        
+        .news-card.expanded {
+            max-height: 2000px; /* Expanded height */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-date {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #D4AF37;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .news-content {
+            padding: 30px;
+            position: relative;
+        }
+        
+        .news-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #001F54;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        
+        .news-excerpt {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            max-height: 100px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .news-card.expanded .news-excerpt {
+            max-height: 0;
+            margin-bottom: 0;
+        }
+        
+        .news-full {
+            max-height: 0;
+            overflow: hidden;
+            color: #555;
+            line-height: 1.7;
+            transition: max-height 0.5s ease;
+        }
+        
+        .news-card.expanded .news-full {
+            max-height: 1500px;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .news-category {
+            background: #E0F7FA;
+            color: #001F54;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .expand-icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #E0F7FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .expand-icon:hover {
+            background: #D4AF37;
+            color: white;
+        }
+        
+        .news-card.expanded .expand-icon i {
+            transform: rotate(180deg);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #001F54;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo img {
+            height: 70px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #E0F7FA;
+        }
+        
+        .footer-author {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+        
+        .footer-social {
+            flex: 1;
+            min-width: 250px;
+            text-align: right;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: #D4AF37;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .news-image {
+                height: 200px;
+            }
+            
+            .news-content {
+                padding: 20px;
+            }
+            
+            .news-title {
+                font-size: 1.4rem;
+                padding-right: 30px;
+            }
+            
+            .expand-icon {
+                top: 20px;
+                right: 20px;
+                width: 35px;
+                height: 35px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-social {
+                text-align: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .news-image {
+                height: 180px;
+            }
+            
+            .news-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        
+        /* Animation Styles */
+        .news-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease, max-height 0.5s ease;
+        }
+        
+        .news-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club" class="logo">
+            
+            <nav class="nav-desktop">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="Members.html" class="nav-link">Members</a>
+                <a href="Gallery.html" class="nav-link">Gallery</a>
+                <a href="Latestnews.html" class="nav-link active">Latest News</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Latest News</h1>
+            <p>Stay updated with the latest activities and initiatives from Oroki Crystals Club</p>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recent Updates</h2>
+                <div class="title-divider"></div>
+            </div>
+            
+            <div class="news-grid">
+                <!-- News Card 1 -->
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://i.postimg.cc/Jz3VGdHY/19474129-img20250816wa0013-jpeg14e7c0e930d58d489212fbc81feccc99.jpg" alt="Community Health Outreach">
+                        <div class="news-date">August 7, 2025</div>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Medical Outreach Program Benefits Hundreds in Osogbo Community</h3>
+                        <div class="expand-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="news-excerpt">
+                            The club organized a comprehensive medical outreach program providing free health screenings, 
+                            consultations, and medications to community members. The initiative focused on preventive healthcare 
+                            and health education.
+                        </div>
+                        <div class="news-full">
+                            <p>In August 7 2025, Oroki Crystals Club organized a extensive medical outreach program that provided free healthcare services to hundreds of residents in the Osogbo community. The initiative offered health screenings, medical consultations, and free medications to address common health challenges faced by community members.</p>
+                            
+                            <p>The program featured volunteer healthcare professionals from within the club's membership, including doctors, nurses, and pharmacists who donated their time and expertise. Services included blood pressure checks, blood sugar tests, malaria testing, vision screenings, and general medical consultations.</p>
+                            
+                            <p>"Access to healthcare is a fundamental right, and we're committed to bridging gaps where they exist," said Crystal Pharm. Ropo Ogunwale, Publicity Secretary of the club. "This outreach is about bringing healthcare to the people who need it most."</p>
+                            
+                            <p>In addition to medical services, the program included health education sessions on topics such as hygiene practices, nutrition, disease prevention, and management of common conditions like hypertension and diabetes. Participants received educational materials to help them maintain healthier lifestyles.</p>
+                            
+                            <p>The medical outreach represents the club's ongoing commitment to addressing pressing community needs. Plans are already underway for future health initiatives, including specialized clinics and partnerships with healthcare institutions to expand the scope and impact of these services.</p>
+                        </div>
+                        <div class="news-meta">
+                            <span class="news-category">Healthcare</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- News Card 2 -->
+                <article class="news-card">
+                    <div class="news-image" style="height: 400px;">
+                        <img src="https://i.postimg.cc/v8vtpyVm/475944238-122145067838526132-8583844391244129072-n-2.jpg" alt="Educational Quiz Competition">
+                        <div class="news-date">October 18, 2024</div>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Oroki Crystals Club Hosts Successful Educational Quiz Competition</h3>
+                        <div class="expand-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="news-excerpt">
+                            The Oroki Crystals Club organized an impactful educational quiz competition for secondary schools in Osogbo, 
+                            with Osogbo Grammar School emerging as the winner. The event featured participation from 9 schools and offered 
+                            scholarships for WAEC, NECO, and JAMB examinations to support educational development in the community.
+                        </div>
+                        <div class="news-full">
+                            <p>The Oroki Crystals Club recently organized a highly successful educational quiz competition that brought together nine secondary schools from across Osogbo. The event, which received official approval from the Osun State Ministry of Education, was held at the prestigious Ataoja School of Science.</p>
+                            
+                            <p>After several rounds of intense competition, Osogbo Grammar School emerged victorious, with Saint Charles Grammar School and Ansar-Deen Grammar School taking second and third places respectively. The winners were awarded comprehensive scholarships that will cover their WAEC, NECO, JAMB examinations, and even university tuition fees.</p>
+                            
+                            <p>"This initiative aligns perfectly with our club's commitment to educational support and intellectual growth," said Crystal Adewale Daodu, General Secretary of Oroki Crystals Club. "We believe that investing in education is investing in the future of our community."</p>
+                            
+                            <p>The quiz competition, which took place between October and November 2024, was designed to promote academic excellence and healthy competition among students. Questions covered various subjects including Mathematics, English Language, Sciences, and Current Affairs.</p>
+                            
+                            <p>Parents and teachers praised the initiative, noting that such programs motivate students to take their studies more seriously. The club has announced plans to make this an annual event, with even more schools expected to participate in next year's competition.</p>
+                        </div>
+                        <div class="news-meta">
+                            <span class="news-category">Education</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- News Card 3 -->
+                <article class="news-card">
+                    <div class="news-image" style="height: 400px;">
+                        <img src="https://i.postimg.cc/bwFhg4TC/18578821-img20240718wa0055-jpeg1d96786da8c97258253f524542323c2e-4.jpg" alt="Omoriyeba Grant Initiative">
+                        <div class="news-date">July 18, 2024</div>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Omoriyeba Grant Empowers Widow with Business Startup</h3>
+                        <div class="expand-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="news-excerpt">
+                            In a heartwarming initiative, the club provided ₦237,000 and a shop space to a widowed woman in Iragbiji 
+                            to establish a foodstuff retail business. This empowerment program aims to support sustainable livelihoods 
+                            and economic independence for community members in need.
+                        </div>
+                        <div class="news-full">
+                            <p>The Omoriyeba Grant initiative, launched in July 2024, has successfully empowered a widowed woman in Iragbiji to start her own foodstuff retail business. The beneficiary received a grant of ₦237,000 along with a fully equipped shop space to help her establish a sustainable source of income.</p>
+                            
+                            <p>This initiative is part of Oroki Crystals Club's broader commitment to social responsibility and community empowerment. The program specifically targets individuals facing economic hardships, particularly widows who often struggle to provide for their families after the loss of a spouse.</p>
+                            
+                            <p>"We believe in creating opportunities for those who need them most," said Crystal Engr. Salami Abiodun Olalekan, Treasurer of the club. "This grant isn't just about financial assistance—it's about restoring dignity and enabling self-sufficiency."</p>
+                            
+                            <p>The selection process for the grant involved a thorough assessment of applicants' needs, proposed business plans, and potential for sustainability. The recipient underwent basic business management training provided by club members with expertise in entrepreneurship and finance.</p>
+                            
+                            <p>The Omoriyeba Grant program represents just one of several community development initiatives planned by the club for 2024-2025. Future projects will continue to focus on creating sustainable economic opportunities for vulnerable members of the community.</p>
+                        </div>
+                        <div class="news-meta">
+                            <span class="news-category">Empowerment</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- News Card 4 -->
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="https://i.postimg.cc/rFZXWtfx/Their-Group-pictures-1.jpg" alt="Inaugural Meeting">
+                        <div class="news-date">December 23, 2023</div>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Oroki Crystals Club Holds Historic Inaugural Physical Meeting</h3>
+                        <div class="expand-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="news-excerpt">
+                            The club marked a significant milestone with its first physical gathering in Osogbo, bringing together 
+                            members from Nigeria, the UK, and Canada. The meeting reinforced the club's mission of community service 
+                            and member development.
+                        </div>
+                        <div class="news-full">
+                            <p>December 23, 2023, marked a historic moment for Oroki Crystals Club as members gathered in Osogbo for their inaugural physical meeting. The event brought together club members from across Nigeria, with virtual participation from members based in the United Kingdom and Canada.</p>
+                            
+                            <p>The meeting served as an opportunity to solidify the club's mission and values, with members reaffirming their commitment to "contributing to society while growing ourselves." Attendees participated in strategic planning sessions to outline the club's philanthropic and community development initiatives for the coming year.</p>
+                            
+                            <p>"This gathering represents the culmination of our vision to create a platform for professionals and community leaders to make meaningful impacts," stated Alhaji (Engr.) Muideen Bello, President of Oroki Crystals Club. "Our strength lies in our unity and shared purpose."</p>
+                            
+                            <p>The meeting also featured the formal induction of new members and the establishment of various committees focused on education, community development, and cultural preservation. Members shared ideas and experiences from their respective fields, fostering cross-pollination of ideas and strategies for community impact.</p>
+                            
+                            <p>Looking ahead, the club plans to make these gatherings a regular feature, with both physical and virtual options to accommodate members across different geographical locations. The success of this inaugural meeting has set a positive tone for the club's activities in 2024 and beyond.</p>
+                        </div>
+                        <div class="news-meta">
+                            <span class="news-category">Event</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club">
+                    <p class="footer-quote">"We are not just a social club. We are a brotherhood of purpose, committed to lifting others, preserving culture, and building a better society."</p>
+                    <p class="footer-author">- Alhaji (Engr.) Muideen Bello, President</p>
+                </div>
+                
+                <div class="footer-social">
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/share/1Az6Xa13T2/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/orokicrystals?igsh=MTFpNW84NDJ2bnM0dA==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@orokiclubof40?_t=ZS-8yx7DxTmxh2&_r=1" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <p>Osogbo, Osun State, Nigeria</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 Oroki Crystals Club. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Expandable cards functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsCards = document.querySelectorAll('.news-card');
+            const expandIcons = document.querySelectorAll('.expand-icon');
+            const newsTitles = document.querySelectorAll('.news-title');
+            
+            // Function to collapse all cards
+            function collapseAllCards() {
+                newsCards.forEach(card => {
+                    card.classList.remove('expanded');
+                });
+            }
+            
+            // Function to expand a specific card
+            function expandCard(card) {
+                collapseAllCards();
+                card.classList.add('expanded');
+                
+                // Scroll to the card if it's not fully in view
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Add click event to expand icons
+            expandIcons.forEach((icon, index) => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const card = this.closest('.news-card');
+                    
+                    if (card.classList.contains('expanded')) {
+                        card.classList.remove('expanded');
+                    } else {
+                        expandCard(card);
+                    }
+                });
+            });
+            
+            // Add click event to news titles
+            newsTitles.forEach((title, index) => {
+                title.addEventListener('click', function() {
+                    const card = this.closest('.news-card');
+                    
+                    if (card.classList.contains('expanded')) {
+                        card.classList.remove('expanded');
+                    } else {
+                        expandCard(card);
+                    }
+                });
+            });
+            
+            // Close expanded card when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.news-card.expanded') && 
+                    !e.target.closest('.expand-icon') &&
+                    document.querySelector('.news-card.expanded')) {
+                    collapseAllCards();
+                }
+            });
+            
+            // Close expanded card when pressing Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    collapseAllCards();
+                }
+            });
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navDesktop = document.querySelector('.nav-desktop');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navDesktop.style.display = navDesktop.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Animation on scroll for news cards
+        function checkScroll() {
+            const elements = document.querySelectorAll('.news-card');
+            
+            elements.forEach((element, index) => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, index * 200);
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>

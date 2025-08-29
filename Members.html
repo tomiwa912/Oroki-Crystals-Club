@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - Oroki Crystals Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #001F54;
+            background-color: #E0F7FA;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+        
+        .logo {
+            height: 45px;
+        }
+        
+        .nav-desktop {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #001F54;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+        
+        .nav-link.active {
+            color: #D4AF37;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #001F54;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 31, 84, 0.6), rgba(0, 48, 140, 0.6)), url('https://i.postimg.cc/0jdXGwWz/Their-Group-pictures-1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 140px 0 80px;
+            margin-top: 45px;
+            position: relative;
+            overflow: hidden;
+            animation: heroAnimation 30s infinite;
+        }
+        
+        @keyframes heroAnimation {
+            0% {
+                background-position: center;
+                background-size: 100%;
+            }
+            50% {
+                background-size: 110%;
+            }
+            100% {
+                background-position: center;
+                background-size: 100%;
+            }
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(0,31,84,0.2) 0%, rgba(0,31,84,0.5) 100%);
+            animation: pulseOverlay 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulseOverlay {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        /* Executive Section */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #001F54;
+            margin-bottom: 15px;
+        }
+        
+        .title-divider {
+            width: 80px;
+            height: 4px;
+            background-color: #D4AF37;
+            margin: 0 auto;
+        }
+        
+        .section-title p {
+            color: #555;
+            max-width: 700px;
+            margin: 15px auto 0;
+        }
+        
+        .executive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .executive-card {
+            background: #edf2f7;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 31, 84, 0.08);
+            transition: all 0.4s ease;
+        }
+        
+        .executive-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 31, 84, 0.15);
+            background: #e8eef5;
+        }
+        
+        .executive-img {
+            height: 280px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid #D4AF37;
+        }
+        
+        .executive-img i {
+            font-size: 80px;
+            color: #aaa;
+        }
+        
+        .executive-info {
+            padding: 25px;
+        }
+        
+        .executive-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: #001F54;
+        }
+        
+        .executive-role {
+            color: #D4AF37;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .executive-bio {
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        /* All Members Section */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        
+        .member-card {
+            background: #edf2f7;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 31, 84, 0.08);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .member-card.aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 31, 84, 0.15);
+            background: #e8eef5;
+        }
+        
+        .member-img {
+            height: 200px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1);
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+        
+        .member-card:hover .member-img img {
+            transform: scale(1.05);
+        }
+        
+        .member-img i {
+            font-size: 60px;
+            color: #999;
+        }
+        
+        .member-info {
+            padding: 20px;
+        }
+        
+        .member-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #001F54;
+        }
+        
+        .member-bio {
+            color: #333;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #001F54;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo img {
+            height: 70px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #E0F7FA;
+        }
+        
+        .footer-author {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+        
+        .footer-social {
+            flex: 1;
+            min-width: 250px;
+            text-align: right;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: #D4AF37;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .executive-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .executive-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-social {
+                text-align: center;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .members-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Animation Styles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club" class="logo">
+            
+            <nav class="nav-desktop">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="Members.html" class="nav-link active">Members</a>
+                <a href="Gallery.html" class="nav-link">Gallery</a>
+                <a href="Latestnews.html" class="nav-link">Latest News</a>
+            </nav>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Our Distinguished Members</h1>
+            <p>Meet the dedicated professionals and leaders of Oroki Crystals Club, united in service and community.</p>
+        </div>
+    </section>
+
+    <!-- Executive Members Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Executive Leadership</h2>
+                <div class="title-divider"></div>
+                <p>Our dedicated executive team guiding the club's mission and vision</p>
+            </div>
+            
+            <div class="executive-grid">
+                <!-- President -->
+                <div class="executive-card fade-in">
+                    <div class="executive-img">
+                        <img src="https://i.postimg.cc/kGZZWB8S/Whats-App-Image-2025-08-10-at-10-16-28-2d9d379c.jpg" alt="President" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="executive-info">
+                        <h3>Alhaji (Engr.) Muideen Bello</h3>
+                        <div class="executive-role">President</div>
+                        <p class="executive-bio">From Osogbo, he is an accomplished engineer and entrepreneur with extensive experience at major telecommunications firms including MTN Nigeria. He brings strong leadership skills and strategic vision to his role as President of Oroki Crystals Club. His interests in politics, history, and faith inform his commitment to community development and cultural preservation.</p>
+                    </div>
+                </div>
+                
+                <!-- Vice President -->
+                <div class="executive-card fade-in">
+                    <div class="executive-img">
+                        <img src="https://i.postimg.cc/1tYPYRwm/Whats-App-Image-2025-08-10-at-14-49-01-6c41cdf6.jpg" alt="Vice President" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="executive-info">
+                        <h3>Comrade Adebowale Adekola</h3>
+                        <div class="executive-role">Vice President</div>
+                        <p class="executive-bio">From Osogbo, he serves as an Auditor at the Office of The Auditor General for Local Governments in Osun State. As pioneer Vice President and co-founder of Oroki Crystals Club, he provides strategic oversight and financial accountability. His professional expertise in auditing ensures transparent governance and fiscal responsibility within the organization.</p>
+                    </div>
+                </div>
+                
+                <!-- Publicity Secretary -->
+                <div class="executive-card fade-in">
+                    <div class="executive-img">
+                        <img src="https://i.postimg.cc/tTH9xRW7/Whats-App-Image-2025-08-20-at-22-02-07-8d5ded69.jpg" alt="Publicity Secretary" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="executive-info">
+                        <h3>Pharm. Ropo Ogunwale</h3>
+                        <div class="executive-role">Publicity Secretary</div>
+                        <p class="executive-bio">From Osogbo, he is a community pharmacist and healthcare entrepreneur with multiple pharmaceutical businesses. He serves as the club's Publicity Secretary, leveraging his expertise in health and community development. His strategic approach enhances the organization's public engagement and outreach initiatives.</p>
+                    </div>
+                </div>
+                
+                <!-- Treasurer -->
+                <div class="executive-card fade-in">
+                    <div class="executive-img">
+                        <img src="https://i.postimg.cc/7PfK21PG/Whats-App-Image-2025-08-20-at-20-09-31-1bf746e9.jpg" alt="Treasurer" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="executive-info">
+                        <h3>Engr. Salami Abiodun Olalekan</h3>
+                        <div class="executive-role">Treasurer</div>
+                        <p class="executive-bio">From Ibadan, he is a construction engineer and project manager at Lanfar Nigeria Limited. He brings his engineering expertise and project management skills to his role as the club's Treasurer. His professional background ensures meticulous financial oversight and responsible resource management for the organization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Members Section -->
+    <section class="section" style="background-color: #f5f8fb;">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>All Members</h2>
+                <div class="title-divider"></div>
+                <p>Our 32 dedicated Crystals working together to make a difference in the community</p>
+            </div>
+            
+            <div class="members-grid" id="membersGrid">
+                <!-- Member cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://i.postimg.cc/dVS5S74q/Oroki-Crystals-Official-Logo.png" alt="Oroki Crystals Club">
+                    <p class="footer-quote">"We are not just a social club. We are a brotherhood of purpose, committed to lifting others, preserving culture, and building a better society."</p>
+                    <p class="footer-author">- Alhaji (Engr.) Muideen Bello, President</p>
+                </div>
+                
+                <div class="footer-social">
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/share/1Az6Xa13T2/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/orokicrystals?igsh=MTFpNW84NDJ2bnM0dA==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@orokiclubof40?_t=ZS-8yx7DxTmxh2&_r=1" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <p>Osogbo, Osun State, Nigeria</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 Oroki Crystals Club. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out',
+            once: true
+        });
+
+        // Function to preload images
+        function preloadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = url;
+                img.onload = resolve;
+                img.onerror = reject;
+            });
+        }
+
+        // Generate member cards
+        const membersGrid = document.getElementById('membersGrid');
+        const members = [
+            {
+                name: "Crystal Adetunji Lasunkanmi",
+                bio: "From Lagos, he is an accomplished architect and CEO of Citiwork Engineering Company. He specializes in creating innovative functional environments through advanced design technology. His expertise spans project management, CAD design, and construction with a focus on delivering exceptional architectural solutions.",
+                image: "https://i.postimg.cc/XYhq1bSk/Whats-App-Image-2025-08-21-at-21-34-09-44c32120.jpg"
+            },
+            {
+                name: "Crystal Babatunde Olanrewaju Isaac",
+                bio: "From Iree, he is an accomplished paint chemist and MD/CEO of Biostar Paints Manufacturing Company in Osogbo. With extensive experience in the paint industry across multiple companies, he brings entrepreneurial expertise and chemical consulting skills. His interests in traveling and politics complement his professional network-building abilities.",
+                image: "https://i.postimg.cc/k4gH2kGL/Whats-App-Image-2025-08-20-at-07-22-31-95f88359.jpg"
+            },
+            {
+                name: "Crystal Ademola Tomori",
+                bio: "From Osogbo, he works as a Data Scope Engineer with specialized technical expertise in data analysis and systems. As a member of the Board of Trustees, he provides valuable insights and strategic guidance to the organization. His technical background supports data-driven decision making for the club's initiatives and development.",
+                image: "https://i.postimg.cc/bJ5msrK2/Whats-App-Image-2025-08-10-at-14-48-44-a03b899c.jpg"
+            },
+            {
+                name: "Crystal Oladeji Mojeed Farinde",
+                bio: "From Erin Osun, he is a skilled fabrication and exploration specialist with experience at Etisalat Nigeria and Ferrano Construct. His technical expertise in fabrication supports infrastructure development projects across various industries. He brings valuable hands-on engineering skills and practical problem-solving abilities to the organization.",
+                image: "https://i.postimg.cc/zfFMXTwt/Whats-App-Image-2025-08-19-at-09-16-36-fae15391.jpg"
+            },
+            {
+                name: "Crystal Sakariyah Adekunle Sikrullahi",
+                bio: "From Osogbo, he is an experienced professional in the consumer goods industry with roles at Unilever Nigeria PLC and Pfizer Nutrition Nigeria. His background includes working with Givanas Nigeria Ltd and Cybele Cosmetics Ltd in Lagos. He brings valuable expertise in product development and brand management to the organization.",
+                image: "https://i.postimg.cc/KcHWzGL2/Whats-App-Image-2025-08-17-at-22-43-24-5015a7d4.jpg"
+            },
+            {
+                name: "Crystal Ayinde Adewale",
+                bio: "From Osogbo, he is a mining engineering consultant with experience at Shenglong Mining International Company in Ebonyi State. His background includes work in the insurance sector with Consolidated Hallmark Insurance in Lagos. He holds a degree from Federal University of Technology Akure and brings interests in adventure, networking, and politics to the organization.",
+                image: "https://i.postimg.cc/DwgH7qPC/Whats-App-Image-2025-08-21-at-21-15-32-b3ecaae8.jpg"
+            },
+            {
+                name: "Crystal Adekunle Emmanuel Beyioku",
+                bio: "From Ibadan, he is an experienced oil and gas professional with an extensive international career spanning companies like Schlumberger, TotalEnergies, and ADNOC in Abu Dhabi. His expertise in petroleum consulting and energy operations has been developed across major industry players including SEPLAT and Heritage Energy. He brings valuable global energy sector experience and technical knowledge to the organization.",
+                image: "https://i.postimg.cc/kgQ9K6F8/Whats-App-Image-2025-08-18-at-15-55-11-331a1d7a.jpg"
+            },
+            {
+                name: "Crystal Ajayi Abiodun Olalekan",
+                bio: "From Osogbo, he works with Mokatec Nig Ltd in Ikeja, Lagos, and is involved with Bilad Music and Films in Kwara State. He also contributes his skills at the National Orientation Agency in the Osun State Directorate, where he sensitizes people on government policies and programs. His interests include traveling, sports, listening to music, and meeting new people.",
+                image: "https://i.postimg.cc/fWSQ12FK/Whats-App-Image-2025-08-24-at-22-21-59-03862053.jpg"
+            },
+            {
+                name: "Crystal Komolafe Olalekan Moses",
+                bio: "From Ijebu Jesa, Oriade LG, he is the CEO of Divine Favour Farms in Osogbo and also leads Komo Builders & Properties. His interests include music, meeting people, community service, and traveling.",
+                image: "https://i.postimg.cc/9MGd6BYf/Whats-App-Image-2025-08-25-at-08-45-44-0aa78dae.jpg"
+            },
+            {
+                name: "Crystal Kolade Eniola",
+                bio: "Hailing from Fiditi, Crystal is a dedicated professional who serves as the Chief Operating Officer at Moromsolutions Company Limited in Abuja. He also brings valuable experience from his role at the Federal Airports Authority of Nigeria. Passionate about giving back, he spends his time engaged in community service and enjoys exploring new places through travel.",
+                image: "https://i.postimg.cc/MTcg2HsT/Whats-App-Image-2025-08-23-at-22-28-16-962b6fc1.jpg"
+            },
+            {
+                name: "Crystal Odediran Olakunle Oluseye",
+                bio: "From Moja Compound in Osogbo, he is the MD/CEO of Noble Kay Praise Nigeria Enterprise and also works with the Nigeria Aviation Handling Company PLC in Ikeja, Lagos. An entrepreneur with a focus on gas and accessories, he has a strong interest in business and values building meaningful friendships.",
+                image: "https://i.postimg.cc/bNbZ3vLz/Whats-App-Image-2025-08-24-at-11-39-39-b45cc359.jpg"
+            },
+            {
+                name: "Crystal Olaniyan Adekunle Simon",
+                bio: "From Ororuwo Boripe LG, he has a diverse work history including roles at Nigeria Machine Tools in Osogbo, Aksa Nigeria Limited in Abuja, and Bulletin Construction Company in Ilorin. He is also involved with St Andrews Multipurpose Global Ventures. His interests are in politics, community service, and traveling, and he has skills in farming.",
+                image: "https://i.postimg.cc/52TwKtFp/Whats-App-Image-2025-08-24-at-16-53-44-ec6f19ff.jpg"
+            },
+            {
+                name: "Crystal Adekunle Ayoade Olalekan",
+                bio: "From Igede Ekiti, he works as a Cooperative Registrar for the Lagos State Government at the Alausa Secretariat in Ikeja. His interests include traveling, making good friends, and community service. He is also skilled in trading.",
+                image: "https://i.postimg.cc/26884Q8t/Whats-App-Image-2025-08-24-at-12-52-45-ed2da463.jpg"
+            },
+            {
+                name: "Crystal Oyebanji Taiwo Oluwaseun",
+                bio: "From Otan Ayegbaju, he has professional experience working with the Nigerian Postal Service (NIPOST). His interests include politics, sports, and herbal studies, and he possesses skills in entrepreneurship and trading.",
+                image: "https://i.postimg.cc/2j1TwgJz/Whats-App-Image-2025-08-24-at-11-40-12-53ce5604.jpg"
+            },
+            {
+                name: "Crystal Akande Moshood Abiola",
+                bio: "From Osogbo, he has extensive experience in the construction industry, working with companies such as Eminent Construction in Gwarimpa, Abuja, and MTADEEN Construction in Life Camp, Abuja. He is also involved with Shood Construction Company and Peculiar Ultimate Concerns, both based in Osogbo. His interests include traveling and community service.",
+                image: "https://i.postimg.cc/WzCLKrmX/Whats-App-Image-2025-08-24-at-16-09-13-6514c9df.jpg"
+            },
+            {
+                name: "Crystal Olabode Adedokun Kehinde",
+                bio: "From Oyan in Odo Otin LGA, he has professional experience with MOAL Integrated Limited and Pinnacle Group UK. He also worked at the University of Hertfordshire in Hatfield, UK, within the Estate and Maintenance Department. His interests include reading and traveling.",
+                image: "https://i.postimg.cc/xTGVgkJy/Whats-App-Image-2025-08-24-at-22-49-28-8d7eadcc.jpg"
+            },
+            {
+                name: "Crystal Bamidele Babatunde Olalekan",
+                bio: "From Otan Ayegbaju in Boluwaduro LG, Osun State, he worked at Osun State College of Education, Ila Orangun, where he held key roles including Formal Head of Audit and Deputy Bursar. His interests lie in politics and entrepreneurship, reflecting his strategic and leadership-oriented career path.",
+                image: "https://i.postimg.cc/1XyBFT1M/Whats-App-Image-2025-08-25-at-16-48-45-c9ce7b22.jpg"
+            },
+            {
+                name: "Crystal Omigbodun Gbenga",
+                bio: "From Osogbo, he works in the Works and Services Department at Osun State College of Technology, Esa Oke, and has experience with FEI Foods Ltd in Swansea, Wales, UK. His interests include traveling and community services, reflecting his dedication to both professional and societal contributions.",
+                image: "https://i.postimg.cc/h4Mbw2BW/Whats-App-Image-2025-08-25-at-18-08-48-0809ba7b.jpg"
+            },
+            {
+                name: "Crystal Opaleye Ajibola Olatunde",
+                bio: "Hailing from Osogbo in Osun State, he has built a strong professional background in the corporate sector, with roles at Watts Oil & Gas Nigeria Ltd and Tuns International Holdings Nigeria Ltd. In his personal time, he enjoys traveling, diving into books, and actively participating in church music. His diverse interests reflect a well-rounded personality dedicated to both his career and community.",
+                image: "https://i.postimg.cc/QdbV0y7v/Whats-App-Image-2025-08-25-at-23-24-36-cc87d5e7.jpg"
+            },
+            "Member 20",
+            "Member 21",
+            "Member 22",
+            "Member 23",
+            "Member 24",
+            "Member 25",
+            "Member 26",
+            "Member 27",
+            "Member 28",
+            "Member 29",
+            "Member 30",
+            "Member 31",
+            "Member 32"
+        ];
+
+        members.forEach((member, index) => {
+            const card = document.createElement('div');
+            card.className = 'member-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index * 100).toString());
+            
+            // Check if member is an object (new format) or string (old format)
+            if (typeof member === 'object') {
+                // Preload the image
+                preloadImage(member.image).then(() => {
+                    card.innerHTML = `
+                        <div class="member-img animate__animated animate__fadeIn">
+                            <img src="${member.image}" alt="${member.name}" loading="lazy">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="animate__animated animate__fadeInUp">${member.name}</h3>
+                            <p class="member-bio animate__animated animate__fadeInUp animate__delay-1s">${member.bio}</p>
+                        </div>
+                    `;
+                });
+            } else {
+                card.innerHTML = `
+                    <div class="member-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>${member}</h3>
+                        <p class="member-bio"></p>
+                    </div>
+                `;
+            }
+            membersGrid.appendChild(card);
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.fade-in').forEach(element => {
+            gsap.to(element, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+        
+        // Stagger animation for member cards
+        gsap.to('.stagger-item', {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.05,
+            scrollTrigger: {
+                trigger: '#membersGrid',
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '8px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navDesktop = document.querySelector('.nav-desktop');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navDesktop.style.display = navDesktop.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
