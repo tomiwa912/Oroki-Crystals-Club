@@ -118,38 +118,6 @@
             margin-top: 45px;
             position: relative;
             overflow: hidden;
-            animation: heroAnimation 30s infinite;
-        }
-        
-        @keyframes heroAnimation {
-            0% {
-                background-position: center;
-                background-size: 100%;
-            }
-            50% {
-                background-size: 110%;
-            }
-            100% {
-                background-position: center;
-                background-size: 100%;
-            }
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle, rgba(0,31,84,0.2) 0%, rgba(0,31,84,0.5) 100%);
-            animation: pulseOverlay 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulseOverlay {
-            0% { opacity: 0.6; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.6; }
         }
         
         .hero h1 {
@@ -417,6 +385,33 @@
         @media (max-width: 768px) {
             .nav-desktop {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                transform: translateY(-10px);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-desktop.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
             }
             
             .mobile-menu-btn {
@@ -446,7 +441,16 @@
             }
             
             .members-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            
+            .member-card {
+                height: auto;
+            }
+
+            .member-img {
+                height: 150px;
             }
             
             .footer-content {
@@ -835,9 +839,46 @@
         // Mobile menu functionality
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navDesktop = document.querySelector('.nav-desktop');
+        let lastScroll = 0;
         
         mobileMenuBtn.addEventListener('click', function() {
-            navDesktop.style.display = navDesktop.style.display === 'flex' ? 'none' : 'flex';
+            navDesktop.classList.toggle('active');
+            if (navDesktop.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.nav-desktop') && !event.target.closest('.mobile-menu-btn')) {
+                navDesktop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Handle header shrink and menu close on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+
+            // Shrink header on scroll down
+            if (currentScroll > 100) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '8px 0';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+
+            // Close mobile menu on scroll
+            if (Math.abs(currentScroll - lastScroll) > 10) {
+                navDesktop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            lastScroll = currentScroll;
         });
     </script>
 </body>
