@@ -175,18 +175,11 @@
             </button>
         </div>
         <style>
-            #mobile-menu {
-                transition: all 0.3s ease;
-                transform: translateY(-10px);
-                opacity: 0;
-                max-height: 0;
-                overflow: hidden;
+            .mobile-menu-hidden {
+                display: none;
             }
-            #mobile-menu.show {
-                transform: translateY(0);
-                opacity: 1;
-                max-height: 100vh;
-                pointer-events: auto;
+            .mobile-menu-visible {
+                display: block;
             }
             .header-shrink {
                 padding-top: 0.5rem !important;
@@ -202,7 +195,7 @@
         </style>
         
         <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="md:hidden bg-white py-4 px-4 absolute top-full left-0 right-0 shadow-lg border-t border-gray-100">
+        <div id="mobile-menu" class="mobile-menu-hidden md:hidden bg-white py-4 px-4 absolute top-full left-0 right-0 w-full shadow-lg border-t border-gray-100">
             <div class="flex flex-col space-y-4">
                 <a href="index.html" class="text-navy font-semibold text-lg py-3 px-4 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors text-center">Home</a>
                 <a href="Members.html" class="text-gray-600 hover:text-navy text-lg py-3 px-4 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors text-center">Members</a>
@@ -425,19 +418,30 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle with smooth transitions
+        // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        
+        function toggleMobileMenu() {
+            if (mobileMenu.classList.contains('mobile-menu-hidden')) {
+                mobileMenu.classList.remove('mobile-menu-hidden');
+                mobileMenu.classList.add('mobile-menu-visible');
+            } else {
+                mobileMenu.classList.remove('mobile-menu-visible');
+                mobileMenu.classList.add('mobile-menu-hidden');
+            }
+        }
 
         mobileMenuBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            mobileMenu.classList.toggle('show');
+            toggleMobileMenu();
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                mobileMenu.classList.remove('show');
+                mobileMenu.classList.remove('mobile-menu-visible');
+                mobileMenu.classList.add('mobile-menu-hidden');
             }
         });
         
@@ -610,41 +614,8 @@
             }
         });
 
-        // Enhanced mobile menu and header functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // Handle header shrink on scroll
         let lastScroll = 0;
-        
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-            setTimeout(() => {
-                mobileMenu.classList.toggle('show');
-            }, 0);
-            
-            if (!mobileMenu.classList.contains('hidden')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-        
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('#mobile-menu') && !event.target.closest('#mobile-menu-button')) {
-                mobileMenu.classList.remove('show');
-                setTimeout(() => {
-                    mobileMenu.classList.add('hidden');
-                }, 300);
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Handle header shrink and menu close on scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             const currentScroll = window.pageYOffset;
@@ -659,26 +630,11 @@
 
             // Close mobile menu on scroll
             if (Math.abs(currentScroll - lastScroll) > 5) {
-                mobileMenu.classList.remove('show');
-                setTimeout(() => {
-                    mobileMenu.classList.add('hidden');
-                }, 300);
-                document.body.style.overflow = '';
+                mobileMenu.classList.remove('mobile-menu-visible');
+                mobileMenu.classList.add('mobile-menu-hidden');
             }
 
             lastScroll = currentScroll;
-        });
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                } else {
-                    gsap.to(header, {
-                        padding: '0.75rem 0',
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    });
-                }
-            }
         });
     </script>
 </body>
