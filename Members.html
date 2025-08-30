@@ -53,10 +53,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 8px 0;
+            transition: all 0.3s ease;
         }
         
         .logo {
             height: 45px;
+            transition: all 0.3s ease;
         }
         
         .nav-desktop {
@@ -399,6 +401,8 @@
                 opacity: 0;
                 pointer-events: none;
                 transition: all 0.3s ease;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
             }
 
             .nav-desktop.active {
@@ -745,7 +749,11 @@
                 bio: "Hailing from Osogbo in Osun State, he has built a strong professional background in the corporate sector, with roles at Watts Oil & Gas Nigeria Ltd and Tuns International Holdings Nigeria Ltd. In his personal time, he enjoys traveling, diving into books, and actively participating in church music. His diverse interests reflect a well-rounded personality dedicated to both his career and community.",
                 image: "https://i.postimg.cc/QdbV0y7v/Whats-App-Image-2025-08-25-at-23-24-36-cc87d5e7.jpg"
             },
-            "Member 20",
+            {
+                name: "Crystal Ademola Ibidun PhD",
+                bio: "From Osogbo, he is a skilled Business Analyst and serves as the Managing Director of Ibidem Technologies Ltd in Lagos, in addition to his role as Logistics and Operations Manager at Makal Energy Services Ltd. His technical expertise includes business analytics, machine learning, and proficiency in tools like Microsoft Power BI, Orange, and text analytics. Driven by a passion for service to humanity, he combines his professional skills with a strong commitment to making a meaningful impact.",
+                image: "https://i.postimg.cc/sxbFX9zr/Whats-App-Image-2025-08-30-at-17-20-12-cd639bd2.jpg"
+            },
             "Member 21",
             "Member 22",
             "Member 23",
@@ -861,19 +869,38 @@
         // Handle header shrink and menu close on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
+            const headerContainer = document.querySelector('.header-container');
             const currentScroll = window.pageYOffset;
 
             // Shrink header on scroll down
             if (currentScroll > 100) {
-                header.style.padding = '5px 0';
+                header.style.padding = '0';
+                headerContainer.style.padding = '5px 0';
                 header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                document.querySelector('.logo').style.height = '35px';
+                
+                // Shrink mobile nav items
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.style.padding = '8px';
+                    });
+                }
             } else {
-                header.style.padding = '8px 0';
+                header.style.padding = '0';
+                headerContainer.style.padding = '8px 0';
                 header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                document.querySelector('.logo').style.height = '45px';
+                
+                // Reset mobile nav items
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.style.padding = '10px';
+                    });
+                }
             }
 
             // Close mobile menu on scroll
-            if (Math.abs(currentScroll - lastScroll) > 10) {
+            if (Math.abs(currentScroll - lastScroll) > 5) {
                 navDesktop.classList.remove('active');
                 document.body.style.overflow = '';
             }
