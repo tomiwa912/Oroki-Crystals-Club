@@ -49,6 +49,55 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            height: 45px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-desktop {
+            display: flex;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                transform: translateY(-10px);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .nav-desktop.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+        }
+            align-items: center;
             padding: 15px 0;
         }
         
@@ -101,6 +150,55 @@
             font-size: 24px;
             color: #001F54;
             cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-desktop {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                transform: translateY(-10px);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .nav-desktop.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+            
+            .header-container {
+                padding: 5px 0;
+            }
+            
+            .logo {
+                height: 45px;
+            }
         }
         
         /* Hero Section */
@@ -635,21 +733,65 @@
         // Mobile menu functionality
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navDesktop = document.querySelector('.nav-desktop');
+        let lastScroll = 0;
         
         mobileMenuBtn.addEventListener('click', function() {
-            navDesktop.style.display = navDesktop.style.display === 'flex' ? 'none' : 'flex';
+            navDesktop.classList.toggle('active');
+            if (navDesktop.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
 
-        // Header scroll effect
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.nav-desktop') && !event.target.closest('.mobile-menu-btn')) {
+                navDesktop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Handle header shrink and menu close on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.padding = '5px 0';
+            const headerContainer = document.querySelector('.header-container');
+            const currentScroll = window.pageYOffset;
+
+            // Shrink header on scroll down
+            if (currentScroll > 100) {
+                header.style.padding = '0';
+                headerContainer.style.padding = '5px 0';
                 header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                document.querySelector('.logo').style.height = '35px';
+                
+                // Shrink mobile nav items
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.style.padding = '8px';
+                    });
+                }
             } else {
-                header.style.padding = '15px 0';
+                header.style.padding = '0';
+                headerContainer.style.padding = '8px 0';
                 header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                document.querySelector('.logo').style.height = '45px';
+                
+                // Reset mobile nav items
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.style.padding = '10px';
+                    });
+                }
             }
+
+            // Close mobile menu on scroll
+            if (Math.abs(currentScroll - lastScroll) > 5) {
+                navDesktop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            lastScroll = currentScroll;
         });
 
         // Simplified GSAP Animations
