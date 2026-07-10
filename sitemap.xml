@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.orokicrystals.com.ng/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.orokicrystals.com.ng/index.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.orokicrystals.com.ng/Gallery.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.orokicrystals.com.ng/Members.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.orokicrystals.com.ng/Latestnews.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+</urlset>
