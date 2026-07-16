@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#001F54" stroke="#D4AF37" stroke-width="3"/>
+  
+  <!-- Crystal geometric shapes -->
+  <g transform="translate(100, 100)">
+    <!-- Central hexagon -->
+    <polygon points="0,-40 34,-20 34,20 0,40 -34,20 -34,-20" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
+    
+    <!-- Inner diamond -->
+    <polygon points="0,-25 21,-12 0,25 -21,-12" fill="#D4AF37" opacity="0.8"/>
+    
+    <!-- Accent points -->
+    <circle cx="0" cy="-35" r="3" fill="#E0F7FA"/>
+    <circle cx="30" cy="-15" r="3" fill="#E0F7FA"/>
+    <circle cx="30" cy="20" r="3" fill="#E0F7FA"/>
+    <circle cx="0" cy="37" r="3" fill="#E0F7FA"/>
+    <circle cx="-30" cy="20" r="3" fill="#E0F7FA"/>
+    <circle cx="-30" cy="-15" r="3" fill="#E0F7FA"/>
+  </g>
+</svg>
